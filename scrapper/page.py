@@ -40,10 +40,10 @@ def get_page_name(url: str) -> Optional[str]:
     return None
 
 class Page:
-    def __init__(self: Page, url: str):
+    def __init__(self, url: str):
         self.url = url
 
-    def configure(self: Page) -> bool:
+    def configure(self) -> bool:
         self.page_name = get_page_name(self.url)
 
         # The page name is validated, if it doesn't match the string it's
@@ -69,7 +69,7 @@ class Page:
             print(f"Request for {self.url} failed with status code: {response.status_code}")
             return False
 
-    def is_character(self: Page) -> bool:
+    def is_character(self) -> bool:
         soup = BeautifulSoup(self.contents, "html.parser")
 
         for a in soup.select("div.page-header__categories a"):
@@ -78,7 +78,7 @@ class Page:
 
         return False
 
-    def get_name(self: Page) -> str:
+    def get_name(self) -> str:
         return self.page_name
 
     def get_connections(self) -> list[str]:
