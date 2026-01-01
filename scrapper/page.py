@@ -6,6 +6,7 @@ from urllib.parse import unquote
 
 CACHE_DIRECTORY = '.cache'
 CHARACTER_URL_PATTERN = r"^https:\/\/warriors\.fandom\.com\/wiki\/([^\/:]+)$"
+CHARACTER_HREF_PATTERN = r"^\/wiki\/([^\/:]+)$"
 
 def load_cached(name: str) -> Optional[str]:
     path = f"{CACHE_DIRECTORY}/{name}.html"
@@ -94,7 +95,8 @@ class Page:
 
             # If the page matches the typical
             # page style it can be considered a character
-            if get_page_name(url):
-                urls.add(url)
+            href_match = re.match(CHARACTER_HREF_PATTERN, url)
+            if href_match: 
+                urls.add(f"https://warriors.fandom.com{url}")
 
         return list(urls)
